@@ -118,7 +118,7 @@ export class JogoDaVelhaService {
 
     /*Verificando se o jogo terminou*/
     this.win = this.fimJogo(posicaoX, posicaoY,
-       this.win, this._player);
+       this.tabuleiro, this._player);
 
     /*Verifica qual player vai jogar e faz a inversão*/
     this._player = (this._player === this.X) ? this.O : this.X;
@@ -141,7 +141,7 @@ export class JogoDaVelhaService {
   }
 
   /**
-   * Verifica e retorna se o jogo terminou
+   * Verifica e retorna se o jogo terminou.
    * 
    * @param linha number
    * @param coluna number
@@ -152,20 +152,6 @@ export class JogoDaVelhaService {
   fimJogo(linha: number, coluna: number,
     tabuleiro: any, player: number) {
       let fim: any = false;
-
-      /*Valida a linha*/
-      if (tabuleiro[linha][0] === player &&
-        tabuleiro[linha][1] === player &&
-        tabuleiro[linha][2] === player) {
-          fim = [[linha, 0], [linha, 1], [linha, 2]];
-      }  
-      
-      /*Valida a coluna*/
-      if (tabuleiro[coluna][0] === player &&
-        tabuleiro[coluna][1] === player &&
-        tabuleiro[coluna][2] === player) {
-          fim = [[coluna, 0], [coluna, 1], [coluna, 2]];
-      }
 
       /*Valida as diagonais*/
       if (tabuleiro[0][0] === player &&
@@ -180,11 +166,48 @@ export class JogoDaVelhaService {
           fim = [[0, 2], [1, 1], [2, 0]];
       }
 
+      /*Valida Colunas*/
+      if (tabuleiro[0][0] === player &&
+        tabuleiro[1][0] === player &&
+        tabuleiro[2][0] === player) {
+          fim = [[0, 0], [1, 0], [2,0]];
+      }
+
+      if (tabuleiro[0][1] === player &&
+        tabuleiro[1][1] === player &&
+        tabuleiro[2][1] === player) {
+          fim = [[0, 1], [1, 1], [2, 1]];
+      }
+
+      if (tabuleiro[0][2] === player &&
+        tabuleiro[1][2] === player &&
+        tabuleiro[2][2] === player) {
+          fim = [[0, 2], [1, 2], [2, 2]];
+      }
+
+      /*Valida Linhas*/
+      if (tabuleiro[0][0] === player &&
+        tabuleiro[0][1] === player &&
+        tabuleiro[0][2] === player) {
+          fim = [[0, 0], [0, 1], [0, 2]];
+      }
+
+      if (tabuleiro[1][0] === player &&
+        tabuleiro[1][1] === player &&
+        tabuleiro[1][2] === player) {
+          fim = [[1, 0], [1, 1], [1, 2]];
+      }
+
+      if (tabuleiro[2][0] === player &&
+        tabuleiro[2][1] === player &&
+        tabuleiro[2][2] === player) {
+          fim = [[2, 0], [2, 1], [2, 2]];
+      }
       return fim;
   }
 
   /**
-   * Lógica que simula jogada do computador em modo aleatório
+   * Lógica que simula jogada do computador em modo aleatório.
    * 
    * @returns void
    */
@@ -246,7 +269,7 @@ export class JogoDaVelhaService {
 
   /**
    * Retorna se a peça X deve ser exibida para a coordenada
-   * informada
+   * informada.
    * 
    * @param posicaoX number
    * @param posicaoY number
@@ -258,7 +281,7 @@ export class JogoDaVelhaService {
 
   /**
    * Retorna se a peça O deve ser exibida para a coordenada
-   * informada
+   * informada.
    * 
    * @param posicaoX number
    * @param posicaoY number
@@ -283,8 +306,8 @@ export class JogoDaVelhaService {
       return exibirVitoria;
     }
 
-    for (let pos of this.win) {
-      if (pos[0] === posicaoX && pos[1] === posicaoY) {
+    for (let posicao of this.win) {
+      if (posicao[0] === posicaoX && posicao[1] === posicaoY) {
         exibirVitoria = true;
         break;
       }
